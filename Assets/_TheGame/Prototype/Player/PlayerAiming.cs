@@ -19,17 +19,17 @@ namespace HardBit.Player {
         [SerializeField] private float _sphereCastRadius = 5;
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _viewAngleLimit = 45f;
+        [SerializeField] private BoneFaceTarget _boneFace;
         [Header("Targeting variables (hide later)")]
         [Space(10)]
         [SerializeField] private Transform _currentTarget;
-        [SerializeField] private Transform[] _possibleTargets;
         [Header("Animation Settings")]
         [Space(10)]
         [SerializeField] private float _aimWeightSmoothness = 5f;
         [SerializeField] private float _unaimWeightSmoothness = 2f;
 
         //private & references
-        private BoneFaceTarget _boneFace;
+        
         private Transform _transform;
         private EnemyTracker _enTracker;
         private PlayerInfo _playerInfo;
@@ -43,7 +43,6 @@ namespace HardBit.Player {
         void CacheInnerReference()
         {
             _transform = this.transform;
-            _boneFace = GetComponent<BoneFaceTarget>();
             _enTracker = EnemyTracker._instance;
             _playerInfo = GetComponent<PlayerInfo>();
         }
@@ -53,6 +52,10 @@ namespace HardBit.Player {
             _playerInfo.OnDeathEvent += OnDeathDo;
         }
 
+        public void SetCanAim(bool b)
+        {
+            _canAim = b;
+        }
 
         void Update()
         {
@@ -61,7 +64,6 @@ namespace HardBit.Player {
                 _xFrameCounter++;
                 if (_xFrameCounter >= _everyXFrames)
                 {
-                    GetPossibleTargets();
                     FindCorrectTarget(_enTracker.ListOfEnemies);
                     AimAtCurrentTarget();
                 }
@@ -155,49 +157,6 @@ namespace HardBit.Player {
             }
         }
 
-        void FindCorrectTarget()
-        {
-            if (_possibleTargets.Length == 0)
-            {
-                _currentTarget = null;
-                return;
-
-            }
-            _currentTarget = null;
-            for (int i = 0; i < _possibleTargets.Length; i++)
-            {
-
-                Transform t = _possibleTargets[i];
-                if (CheckIfTargetInFront(t) && Mathf.Abs(GetAngleBetween(t)) <= _viewAngleLimit)
-                {
-                    float oldDistance = Mathf.Infinity;
-                    if (_currentTarget != null)
-                    {
-                        oldDistance = Vector3.Distance(_currentTarget.position, _transform.position);
-                    }
-                    float currentDistance = Vector3.Distance(t.position, _transform.position);
-
-                    if (currentDistance < oldDistance)
-                    {
-                        _currentTarget = _possibleTargets[i];
-                    }
-                }
-
-            }
-        }
-
-
-
-        void GetPossibleTargets()
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(_transform.position, _sphereCastRadius, _layerMask);
-            _possibleTargets = new Transform[hitColliders.Length];
-            for (int i = 0; i < _possibleTargets.Length; i++)
-            {
-                _possibleTargets[i] = hitColliders[i].transform;
-            }
-        }
-
 
         void OnDeathDo()
         {
@@ -208,28 +167,14 @@ namespace HardBit.Player {
 
         void DrawLinesToTargets()
         {
-            for (int i = 0; i < _possibleTargets.Length; i++)
-            {
-                if (_possibleTargets[i] == _currentTarget)
-                {
-                    Debug.DrawLine(_transform.position, _possibleTargets[i].position, Color.cyan);
-                }
-                else
-                {
-                    Debug.DrawLine(_transform.position, _possibleTargets[i].position, Color.red);
-                }
-            }
+            
         }
 
         void DrawAngleToTarget()
         {
 
         }
-        private void OnDrawGizmos()
-        {
-            DrawLinesToTargets();
-            DrawAngleToTarget();
-        }
+       
         #endregion
 
     }

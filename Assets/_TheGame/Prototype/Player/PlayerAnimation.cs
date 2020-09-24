@@ -66,5 +66,15 @@ namespace HardBit.Player {
             _anim.SetLayerWeight(1, 0);
             _anim.SetTrigger("Die");
         }
+
+        public void HandsUpAnimation()
+        {
+            _anim.SetTrigger("HandsUp");
+        }
+
+        public void HandsDownAnimation()
+        {
+            _anim.SetTrigger("HandsDown");
+        }
     }
 }

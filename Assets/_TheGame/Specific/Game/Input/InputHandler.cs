@@ -5,6 +5,9 @@ namespace HardBit.Specific.UserInput {
 
     public class InputHandler : MonoBehaviour {
 
+
+        public static InputHandler _instance;
+
         [SerializeField] private Joystick _joysticLeft;
         [SerializeField] private Joystick _joysticRight;
         [SerializeField] private UnityEvent _shootingEvent;
@@ -14,8 +17,22 @@ namespace HardBit.Specific.UserInput {
         public Vector2 DirectionLeft { get => JoystickLeftDirection(); }
         public Vector2 DirectionRight { get => JoystickRightDirection(); }
 
+        public delegate void OnInteractDelegate();
+        public event OnInteractDelegate OnInteractEvent;
 
 
+
+        private void OnEnable()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         public void Shoot()
         {
@@ -32,6 +49,13 @@ namespace HardBit.Specific.UserInput {
         {
             _flippingEvent.Invoke();
         }
+
+        public void Interact()
+        {
+            OnInteractEvent?.Invoke();
+        }
+
+
 
         public Vector2 JoystickLeftDirection()
         {
@@ -51,7 +75,8 @@ namespace HardBit.Specific.UserInput {
 
         private void Update()
         {
-            if (Input.GetButton("Shoot") || JoystickRightDirection().magnitude > 0)
+            //|| JoystickRightDirection().magnitude > 0
+            if (Input.GetButton("Shoot") ) 
             {
                 Shoot();
             }
@@ -65,6 +90,11 @@ namespace HardBit.Specific.UserInput {
             if (Input.GetButtonDown("Flip"))
             {
                 Flip();
+            }
+
+            if (Input.GetButtonDown("Interact"))
+            {
+                Interact();
             }
         }
     }

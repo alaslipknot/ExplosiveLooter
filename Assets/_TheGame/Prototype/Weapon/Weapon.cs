@@ -10,6 +10,7 @@ namespace HardBit.Specific.Weapons {
         [SerializeField] private Transform _gunPort;
         [SerializeField] private Vector3 _gunPortOffset = new Vector3(0, 0, 0.5f);
         [SerializeField] private float _impactOffset = 0.5f;
+        [SerializeField] private GameObject _weaponGraphics;
         private float _coolDownCounter;
         private bool _canShoot;
 
@@ -87,6 +88,11 @@ namespace HardBit.Specific.Weapons {
                 damageable.TakeDamage(_weaponTemplate.Damage);
                 PlaceImpact(coll.contacts[0].point);
             }
+        }
+
+        public void SetWeaponVisiblility(bool b)
+        {
+            _weaponGraphics.SetActive(b);
         }
     }
 }

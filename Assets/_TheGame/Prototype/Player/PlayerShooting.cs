@@ -36,6 +36,9 @@ namespace HardBit.Player
             _weapon.ShootReset();
         }
 
-
+        public void SetWeaponVisibility(bool b)
+        {
+            _weapon.SetWeaponVisiblility(b);
+        }
     }
 }

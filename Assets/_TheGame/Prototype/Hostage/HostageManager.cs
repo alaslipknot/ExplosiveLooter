@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using HardBit.Universal.Math;
 using System.Collections.Generic;
 using HardBit.Universal.StandardBehaviors.Movements;
 
@@ -10,9 +9,10 @@ namespace HardBit.Hostages {
         [SerializeField] private int _totalHostage;
         [Header("Class settings")]
         [SerializeField] private GameObject _prefabHostage;
-        [SerializeField] private List<HostageMain> _listHostage = new List<HostageMain>();
-        [SerializeField] private HostageSpawnPositions _spawnPositions;
-        [SerializeField] private int _spawnPosIndex;
+        [SerializeField] private Transform _portal;
+        private List<HostageMain> _listHostage = new List<HostageMain>();
+        private HostageSpawnPositions _spawnPositions;
+        private int _spawnPosIndex;
         void Start()
         {
             _spawnPositions = HostageSpawnPositions._instance;
@@ -44,6 +44,8 @@ namespace HardBit.Hostages {
             HostageMain host = go.GetComponent<HostageMain>();
             host.transform.position = _spawnPositions._spawnList[_spawnPosIndex];
             host.transform.parent = transform;
+            host.SetMainParent(transform);
+            host.SetPortalPosition(_portal.position);
             _listHostage.Add(host);
             _spawnPosIndex++;
         }

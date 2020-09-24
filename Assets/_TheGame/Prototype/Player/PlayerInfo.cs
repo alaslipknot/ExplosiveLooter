@@ -1,5 +1,8 @@
 ﻿/*
- * Refactor this class to use delegate Events
+ * Refactor 
+ * Damage =/= info
+ * use PlayerDamage
+ * use PlayerState
  * */
 
 using UnityEngine;
@@ -7,54 +10,59 @@ using UnityEngine;
 namespace HardBit.Player {
     public class PlayerInfo : MonoBehaviour {
 
+        public static PlayerInfo _instance;
+
+        #region Exposed variables
         [SerializeField] private int _hp;
         [SerializeField] private int _maxHp;
         [SerializeField] private bool _isDead;
-        public delegate void OnDeathDelegate();
-        public event OnDeathDelegate OnDeathEvent;
-        //inner references
-        PlayerDamage _playerDamage;
-        PlayerHUD _playerHud;
-        PlayerMovement _playerMove;
-        PlayerAnimation _playerAnim;
+        #endregion
 
-        public bool IsDead { get => _isDead; set => _isDead = value; }
 
-        private void Start()
+
+
+        private void OnEnable()
         {
-            CacheInnerVariables();
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
-        void CacheInnerVariables()
-        {
-            _playerDamage = GetComponent<PlayerDamage>();
-            _playerHud = GetComponent<PlayerHUD>();
-            _playerMove = GetComponent<PlayerMovement>();
-            _playerAnim = GetComponent<PlayerAnimation>();
-        }
+      
+       
 
         public float GetHpRatio()
         {
             return (float)_hp / (float)_maxHp;
         }
 
+        #region Dammage
+        public bool IsDead { get => _isDead; set => _isDead = value; }
+        #region Delegates events
+        public delegate void OnDeathDelegate();
+        public event OnDeathDelegate OnDeathEvent;
+        #endregion
         public void TakeDamage(int damage, Vector3 enemyPosition)
         {
             _hp -= damage;
             if (_hp > 0)
             {
-                _playerHud.SetHpInfo(GetHpRatio(), _hp, _maxHp);
-                _playerMove.SetRecoilDirectio(enemyPosition);
-                _playerDamage.OnDamageEvents();
+                PlayerSingleton._instance._playerHud.SetHpInfo(GetHpRatio(), _hp, _maxHp);
+                PlayerSingleton._instance._playerMovement.SetRecoilDirectio(enemyPosition);
+                PlayerSingleton._instance._playerDamage.OnDamageEvents();
             }
             else
             {
-                _playerHud.SetHpInfo(GetHpRatio(), _hp, _maxHp);
-                _playerMove.SetRecoilDirectio(enemyPosition);
-                _playerDamage.OnDamageEvents();
+                PlayerSingleton._instance._playerHud.SetHpInfo(GetHpRatio(), _hp, _maxHp);
+                PlayerSingleton._instance._playerMovement.SetRecoilDirectio(enemyPosition);
                 RiseDeathEvent();
             }
-           
+
         }
 
         public void RiseDeathEvent()
@@ -67,5 +75,8 @@ namespace HardBit.Player {
 
             }
         }
+        #endregion
+
+
     }
 }

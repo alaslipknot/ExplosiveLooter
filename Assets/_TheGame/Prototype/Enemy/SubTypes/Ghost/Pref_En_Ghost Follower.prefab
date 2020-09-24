@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5780eca4efa2cc24e862f856ee5b9d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 10
+  _maxSpeed: 5
   _velocityForce: 50
   _canMove: 1
   _target: {fileID: 0}

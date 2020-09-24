@@ -26,11 +26,11 @@ MonoBehaviour:
     totalInWave: 30
     forceHP: 10
     splitWave: 1
-    splitNum: 10
+    splitNum: 5
   - enemyPrefab: {fileID: 7659411666374943405, guid: 1b8adf6c7b7adad40a3e2f4e37e5882b,
       type: 3}
     name: Follower
     totalInWave: 75
     forceHP: 2
     splitWave: 1
-    splitNum: 15
+    splitNum: 7
