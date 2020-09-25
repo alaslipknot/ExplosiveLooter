@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: _harmPower
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3978417793677180304, guid: d5824c80c0cf3d248a1a70ec88f949de,
+        type: 3}
+      propertyPath: _takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3978417793677180308, guid: d5824c80c0cf3d248a1a70ec88f949de,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -20,6 +20,13 @@ namespace HardBit.Enemies {
         private Transform _transform;
         private EnemyTracker _enTracker;
 
+        #region Delegates
+        public delegate void OnDeathDelegate();
+        public OnDeathDelegate OnDeathEvent;
+
+        #endregion
+
+
         #region Properties
         public string Name { get => _name; set => _name = value; }
         public int Hp { get => _hp; set => _hp = value; }
@@ -38,12 +45,11 @@ namespace HardBit.Enemies {
 
         private void OnDisable()
         {
-            RemoveFromTracker();
         }
 
         private void OnDestroy()
         {
-            RemoveFromTracker();
+
         }
 
         private void Start()
@@ -55,7 +61,12 @@ namespace HardBit.Enemies {
 
 
         public virtual void Attack() { }
-        public virtual void Die() { }
+        public virtual void Die()
+        {
+            RemoveFromTracker();
+            OnDeathEvent?.Invoke();
+
+        }
         public virtual void TakeDamage() { }
 
         #region Tracking

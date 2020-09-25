@@ -16,10 +16,8 @@ namespace HardBit.Enemies {
         public static EnemyTracker _instance;
         [SerializeField] private List<EnemyMain> _listOfEnemies;
         [SerializeField] private PlayerInfo _player;
-        [SerializeField] private bool _allAreDead;
         public List<EnemyMain> ListOfEnemies { get => _listOfEnemies; set => _listOfEnemies = value; }
         public PlayerInfo Player { get => _player; set => _player = value; }
-        public bool AllAreDead { get => _allAreDead; set => _allAreDead = value; }
 
         private void OnEnable()
         {
@@ -39,13 +37,11 @@ namespace HardBit.Enemies {
             }
         }
 
-        public void CheckAllDead()
+        public bool IsAllDead()
         {
+            return _listOfEnemies.Count == 0;
 
-            for (int i = 0; i < _listOfEnemies.Count; i++)
-            {
 
-            }
         }
 
 

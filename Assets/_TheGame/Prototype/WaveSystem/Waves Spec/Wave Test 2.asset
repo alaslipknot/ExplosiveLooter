@@ -18,6 +18,9 @@ MonoBehaviour:
     name: Roamer
     totalInWave: 40
     forceHP: 4
+    forceSpeed: 5
+    randomizeSpeed: 1
+    speedRandom: 3
     splitWave: 1
     splitNum: 10
   - enemyPrefab: {fileID: 7219445135693435119, guid: 5a764e82b1168c544946b8914fad3b94,
@@ -25,6 +28,9 @@ MonoBehaviour:
     name: Roamer big
     totalInWave: 30
     forceHP: 10
+    forceSpeed: 5
+    randomizeSpeed: 0
+    speedRandom: 1
     splitWave: 1
     splitNum: 5
   - enemyPrefab: {fileID: 7659411666374943405, guid: 1b8adf6c7b7adad40a3e2f4e37e5882b,
@@ -32,5 +38,8 @@ MonoBehaviour:
     name: Follower
     totalInWave: 75
     forceHP: 2
+    forceSpeed: 5
+    randomizeSpeed: 1
+    speedRandom: 3
     splitWave: 1
     splitNum: 7

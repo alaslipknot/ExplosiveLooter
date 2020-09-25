@@ -33,8 +33,8 @@ namespace HardBit.Player {
             }
         }
 
-      
-       
+
+
 
         public float GetHpRatio()
         {

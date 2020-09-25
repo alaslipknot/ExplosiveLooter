@@ -5244,6 +5244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a819cd47ed342f8448b27857a9ba0bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentWave: {fileID: 0}
 --- !u!1001 &762157663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6181,7 +6182,7 @@ MonoBehaviour:
   _recoilDelay: 0.2
   _faceDirection: 0
   _direction: 1
-  _recoilForce: 15
+  _recoilForce: 50
   _recoilDirection: {x: 0, y: 0, z: 0}
   _inputHandler: {fileID: 302136433}
 --- !u!54 &917033104
@@ -9225,7 +9226,7 @@ Transform:
   m_GameObject: {fileID: 1417038005}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -8.8, y: 7.74, z: 0}
-  m_LocalScale: {x: 6.809651, y: 1, z: 20}
+  m_LocalScale: {x: 33.01, y: 1, z: 72.42}
   m_Children: []
   m_Father: {fileID: 113515201}
   m_RootOrder: 0
@@ -10442,7 +10443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8ad7d735dd9fe439ed90451b95d878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wave: {fileID: 11400000, guid: 2ae2e42f628c95d42bc30247c18d4035, type: 2}
+  _wave: {fileID: 11400000, guid: c28950194a05b4f4a874d4964a782c83, type: 2}
   _splitList: []
   _spawnDelayPerEnemy: 0.1
   _splitTrackDelay: 1.75
@@ -12362,7 +12363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2117109097
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ namespace HardBit.Specific.Weapons
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log("Collision from Main Function");
+
             if (OnCollidedEvent != null)
             {
                 OnCollidedEvent(collision);

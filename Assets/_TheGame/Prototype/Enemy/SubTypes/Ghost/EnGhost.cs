@@ -10,11 +10,10 @@ namespace HardBit.Enemies
         public void TakeDamage(int damage)
         {
             TakeDamageEvent.Invoke();
-            print("taking cunt");
+
             Hp--;
             if (Hp <= 0)
             {
-                print("death");
                 DeathEvent.Invoke();
             }
         }

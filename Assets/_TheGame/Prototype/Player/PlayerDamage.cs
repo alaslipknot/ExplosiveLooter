@@ -8,7 +8,7 @@ namespace HardBit.Player {
 
         public void OnDamageEvents()
         {
-            print("Player taking Damage");
+
             _takeDamageEvents.Invoke();
         }
 

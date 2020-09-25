@@ -84,7 +84,7 @@ namespace HardBit.Specific.Weapons {
             IDamageable damageable = coll.gameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                Debug.Log("Dealing " + _weaponTemplate.Damage + " Damage" + " @" + coll.gameObject.name);
+               // Debug.Log("Dealing " + _weaponTemplate.Damage + " Damage" + " @" + coll.gameObject.name);
                 damageable.TakeDamage(_weaponTemplate.Damage);
                 PlaceImpact(coll.contacts[0].point);
             }

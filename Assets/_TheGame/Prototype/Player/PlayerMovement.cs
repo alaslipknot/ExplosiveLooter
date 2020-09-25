@@ -87,7 +87,6 @@ namespace HardBit.Player {
             isFlipping = true;
             var rot = _transform.eulerAngles;
             rot.y += 180;
-            print(rot.y);
             _transform.DORotate(rot, 0.15f).SetEase(Ease.OutSine).OnComplete(FlippingComplete);
 
 

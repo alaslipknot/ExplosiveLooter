@@ -13,15 +13,18 @@ namespace HardBit.WaveSystem {
         [Range(0.1f, 3.0f)]
         [SerializeField] private float _splitTrackDelay = 2.0f;
 
+        private WaveMaster _waveMaster;
+
         EnemySpawnPositions _spawnPositions;
 
         private void Start()
         {
             _spawnPositions = EnemySpawnPositions._instance;
-
+            _waveMaster = transform.parent.GetComponent<WaveMaster>();
             LaunchWave();
         }
 
+        #region startup
         void LaunchWave()
         {
             for (int i = 0; i < _wave.enemies.Length; i++)
@@ -35,36 +38,26 @@ namespace HardBit.WaveSystem {
         {
             WaveEnemyData enemyData = _wave.enemies[index];
 
-            if (enemyData.splitWave)
-            {
-                StartCoroutine(SpawnSplitOneByOne(MakeSplitTracker(index, enemyData), enemyData, _spawnDelayPerEnemy));
-            }
-            else
-            {
-                StartCoroutine(SpawnOneByOne(enemyData, _spawnDelayPerEnemy));
-            }
+            StartCoroutine(SpawnSplitOneByOne(MakeSplitTracker(index, enemyData), enemyData, _spawnDelayPerEnemy));
+
         }
+        #endregion
 
+        #region Status
 
-        WaveSplitTracker MakeSplitTracker(int index, WaveEnemyData enemyData)
+        public bool NoMoreSplits()
         {
-            WaveSplitTracker wst = new WaveSplitTracker();
-            wst._enemyData = enemyData;
-            wst._splitNum = enemyData.splitNum;
-            wst._totalRequired = enemyData.totalInWave;
-            _splitList.Add(wst);
-            return wst;
+            return _splitList.Count == 0;
         }
 
+        #endregion
+
+        #region Spawn & track multiple enemies
         IEnumerator SpawnSplitOneByOne(WaveSplitTracker wst, WaveEnemyData enemyData, float delay)
         {
             for (int i = 0; i < wst._splitNum; i++)
             {
-                Vector3 pos = _spawnPositions._spawnList[Random.Range(0, _spawnPositions._spawnList.Length)];
-                pos.x += Random.Range(-2.0f, 2.0f);
-                pos.z += Random.Range(-2.0f, 2.0f);
-                EnemyMain en = SpawnEnemy(enemyData.enemyPrefab, pos);
-                en.Hp = enemyData.forceHP;
+                EnemyMain en = SpawnAndSetupEnemy(enemyData.enemyPrefab, enemyData);
                 wst._enemiesList.Add(en);
                 wst._spawnCounter++;
                 yield return new WaitForSeconds(delay);
@@ -79,6 +72,7 @@ namespace HardBit.WaveSystem {
             if (wst._spawnCounter >= wst._totalRequired)
             {
                 // Debug.Log("Track over, all enemies are spawned");
+                _splitList.Remove(wst);
                 yield return null;
             }
             else
@@ -107,25 +101,68 @@ namespace HardBit.WaveSystem {
 
         }
 
-        IEnumerator SpawnOneByOne(WaveEnemyData enemyData, float delay)
+        WaveSplitTracker MakeSplitTracker(int index, WaveEnemyData enemyData)
         {
-            for (int i = 0; i < enemyData.totalInWave; i++)
+            WaveSplitTracker wst = new WaveSplitTracker();
+            wst._enemyData = enemyData;
+            if (enemyData.splitWave)
             {
-                Vector3 pos = _spawnPositions._spawnList[Random.Range(0, _spawnPositions._spawnList.Length)];
-                pos.x += Random.Range(-2.0f, 2.0f);
-                pos.z += Random.Range(-2.0f, 2.0f);
-                EnemyMain en = SpawnEnemy(enemyData.enemyPrefab, pos);
-                en.Hp = enemyData.forceHP;
-                yield return new WaitForSeconds(delay);
+                wst._splitNum = enemyData.splitNum;
+                wst._totalRequired = enemyData.totalInWave;
             }
+            else
+            {
+                wst._splitNum = enemyData.totalInWave;
+                wst._totalRequired = enemyData.totalInWave;
+            }
+
+            _splitList.Add(wst);
+            return wst;
         }
 
-        EnemyMain SpawnEnemy(GameObject prefab, Vector3 position)
+        #endregion
+
+        #region Init & setup single enemy
+        EnemyMain SpawnAndSetupEnemy(GameObject prefab, WaveEnemyData data)
         {
-            return Instantiate(prefab, position, Quaternion.identity).GetComponent<EnemyMain>();
+            EnemyMain en = Instantiate(prefab).GetComponent<EnemyMain>();
+            SetupEnemy(en, data);
+            return en;
         }
+
+        void SetupEnemy(EnemyMain en, WaveEnemyData data)
+        {
+            //setup main data
+            en.Hp = data.forceHP;
+            en.OnDeathEvent += _waveMaster.OnEnemyDeath;
+            EnMover enMover = en.GetComponent<EnMover>();
+            enMover.MaxSpeed = data.forceSpeed;
+            if (data.randomizeSpeed)
+            {
+                int x = (Random.Range(0, 2) == 0) ? 1 : -1;
+                enMover.MaxSpeed += Random.Range(0, data.speedRandom) * x;
+            }
+            //setup position
+            Vector3 pos = _spawnPositions._spawnList[Random.Range(0, _spawnPositions._spawnList.Length)];
+            pos.x += Random.Range(-2.0f, 2.0f);
+            pos.z += Random.Range(-2.0f, 2.0f);
+            en.transform.position = pos;
+        }
+        #endregion
 
 
 
     }
 }
+
+
+
+
+/*  IEnumerator SpawnOneByOne(WaveEnemyData enemyData, float delay)
+  {
+      for (int i = 0; i < enemyData.totalInWave; i++)
+      {
+          EnemyMain en = SpawnAndSetupEnemy(enemyData.enemyPrefab, enemyData);
+          yield return new WaitForSeconds(delay);
+      }
+  }*/

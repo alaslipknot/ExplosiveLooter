@@ -20,7 +20,6 @@ public class EnAnime : MonoBehaviour
     public void DamageTrigger()
     {
         _animator.SetTrigger("TakeDamage");
-        print("damage anime");
     }
     public void DieTrigger()
     {
