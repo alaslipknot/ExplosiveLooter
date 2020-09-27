@@ -3739,7 +3739,6 @@ GameObject:
   - component: {fileID: 534669906}
   - component: {fileID: 534669908}
   - component: {fileID: 534669910}
-  - component: {fileID: 534669909}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3923,45 +3922,6 @@ MonoBehaviour:
   waveform: 0
   vectorscope: 0
   debugOverlay: 10
---- !u!114 &534669909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a879e317c20b0d41a9a56f1a97f4cf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ApplyMethod: 0
-  SampleCount: 0
-  PerPixelNormals: 1
-  Intensity: 0.5
-  Tint: {r: 0, g: 0, b: 0, a: 1}
-  Radius: 2
-  PowerExponent: 2.44
-  Bias: 0
-  Thickness: 1
-  Downsample: 1
-  CacheAware: 1
-  FadeEnabled: 0
-  FadeStart: 0
-  FadeLength: 0.01
-  FadeToIntensity: 0.988
-  FadeToTint: {r: 0, g: 0, b: 0, a: 1}
-  FadeToRadius: 2
-  FadeToPowerExponent: 0
-  FadeToThickness: 1
-  BlurEnabled: 1
-  BlurRadius: 2
-  BlurPasses: 1
-  BlurSharpness: 0
-  FilterEnabled: 0
-  FilterDownsample: 0
-  FilterBlending: 0
-  FilterResponse: 0.5
 --- !u!114 &534669910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10212,7 +10172,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listOfEnemies: []
   _player: {fileID: 0}
-  _allAreDead: 0
 --- !u!4 &1608701594
 Transform:
   m_ObjectHideFlags: 0
