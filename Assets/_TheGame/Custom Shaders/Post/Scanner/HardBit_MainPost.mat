@@ -44,10 +44,10 @@ Material:
     - _Depth1: 0.772
     - _DepthStep: 0
     - _GeneralDepth: 12.01
-    - _Intensity: 1
+    - _Intensity: 15.27
     - _Power: 1
-    - _Scale: 1
-    - _ScreenDepth: 35.5
+    - _Scale: 0
+    - _ScreenDepth: 33.58
     - _Speed: 0
     - _Step: 1
     - _Step1: 0
@@ -57,6 +57,6 @@ Material:
     - _Color: {r: 0, g: 1, b: 0.3174081, a: 0}
     - _Color1: {r: 0, g: 1, b: 0.3174081, a: 0}
     - _GenDepthColor: {r: 0.5285578, g: 0, b: 1, a: 0}
-    - _SDepthColor: {r: 0.07524917, g: 0.6166993, b: 0.8396226, a: 0}
+    - _SDepthColor: {r: 0.618065, g: 0.8392157, b: 0.07450981, a: 0}
     - _WorldObject: {r: -1, g: -1, b: -6.5, a: 0}
     - _WorldPosition: {r: -0, g: 1, b: -0, a: -0}
