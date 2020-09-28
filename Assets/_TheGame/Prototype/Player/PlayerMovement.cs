@@ -104,7 +104,17 @@ namespace HardBit.Player {
             if (_isRecoiling) return;
 
             _moveDirection = _inputHandler.DirectionLeft;
-            MoveDirectionally();
+
+            if (_faceDirection)
+            {
+                FaceJoystick();
+                MoveForward();
+            }
+            else
+            {
+                MoveDirectionally();
+
+            }
 
         }
 
@@ -125,14 +135,16 @@ namespace HardBit.Player {
         private void MoveForward()
         {
             _currentSpeed = _moveSpeed * _inputHandler.DirectionLeft.magnitude;
-            _transform.Translate(_currentSpeed * transform.forward * _direction * Time.deltaTime, Space.World);
+            _body.AddForce(_currentSpeed * _transform.forward, ForceMode.Impulse);
+            _body.velocity = Vector3.ClampMagnitude(_body.velocity, _maxVelocity);
+           // _transform.Translate(_currentSpeed * transform.forward  * Time.deltaTime, Space.World);
         }
 
         private void FaceJoystick()
         {
-            if (Mathf.Abs(_inputHandler.DirectionRight.magnitude) > 0)
+            if (Mathf.Abs(_inputHandler.DirectionLeft.magnitude) > 0)
             {
-                var yRotation = Mathf.Atan2(_inputHandler.DirectionRight.x, _inputHandler.DirectionRight.y) * Mathf.Rad2Deg;
+                var yRotation = Mathf.Atan2(_inputHandler.DirectionLeft.x, _inputHandler.DirectionLeft.y) * Mathf.Rad2Deg;
                 var euler = _transform.eulerAngles;
                 euler.y = yRotation + _camera.eulerAngles.y * _direction;
                 _transform.eulerAngles = euler;

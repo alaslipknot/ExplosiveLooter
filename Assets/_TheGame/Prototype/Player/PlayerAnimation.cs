@@ -3,6 +3,9 @@
 namespace HardBit.Player {
     public class PlayerAnimation : MonoBehaviour {
 
+        //FIX LATER
+        public bool _isMelee;
+        public int _comboID;
         #region Private fields
         private float _velX;
         private float _velY;
@@ -43,7 +46,21 @@ namespace HardBit.Player {
 
         private void Update()
         {
-            SetMovingSpeed(_playerMove.MoveDirection, _playerMove.Direction);
+            if (_isMelee)
+            {
+                SetMeleeMovingSpeed(_playerMove.MoveDirection.magnitude);
+
+            }
+            else
+            {
+                SetMovingSpeed(_playerMove.MoveDirection, _playerMove.Direction);
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                MeleeAttackAnimation();
+            }
         }
 
 
@@ -55,6 +72,21 @@ namespace HardBit.Player {
             _anim.SetFloat("VelX", _velX);
             _anim.SetFloat("VelY", _velY);
         }
+
+        void SetMeleeMovingSpeed(float joystick)
+        {
+            _anim.SetFloat("Speed", joystick);
+            
+
+        }
+        void MeleeAttackAnimation()
+        {
+            _anim.SetTrigger("MeleeAttack");
+            _comboID++;
+            if (_comboID > 1) { _comboID = 0; }
+            _anim.SetInteger("ComboID", _comboID);
+        }
+
 
         void ShootAnimation()
         {

@@ -15,8 +15,8 @@ MonoBehaviour:
   _maxSpeed: 5
   _velocityForce: 10
   _canMove: 1
-  _minRange: {x: -18, y: 1.42, z: -60}
-  _maxRange: {x: 18, y: 1.42, z: 60}
+  _minRange: {x: -12, y: 1.42, z: -14}
+  _maxRange: {x: 12, y: 1.42, z: 14}
   _lookAt: 1
   _ignoreY: 1
 --- !u!1001 &1827526448966283561
