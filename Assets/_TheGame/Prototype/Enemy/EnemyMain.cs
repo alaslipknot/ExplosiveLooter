@@ -19,6 +19,7 @@ namespace HardBit.Enemies {
         [Header("Cached")]
         private Transform _transform;
         private EnemyTracker _enTracker;
+        private Rigidbody _body;
 
         #region Delegates
         public delegate void OnDeathDelegate();
@@ -36,6 +37,7 @@ namespace HardBit.Enemies {
         public UnityEvent DeathEvent { get => _deathEvent; set => _deathEvent = value; }
         public UnityEvent TakeDamageEvent { get => _takeDamageEvent; set => _takeDamageEvent = value; }
         public Transform Transform { get => _transform; set => _transform = value; }
+        public Rigidbody Body { get => _body; set => _body = value; }
         #endregion
 
         private void OnEnable()
@@ -54,10 +56,14 @@ namespace HardBit.Enemies {
 
         private void Start()
         {
-            _transform = this.transform;
-
+            CacheInnerVariables();
         }
 
+        void CacheInnerVariables()
+        {
+            _transform = this.transform;
+            _body = GetComponent<Rigidbody>();
+        }
 
 
         public virtual void Attack() { }

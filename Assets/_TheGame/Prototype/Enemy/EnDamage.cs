@@ -9,7 +9,7 @@ namespace HardBit.Enemies
         [SerializeField] private int _hp = 5;
         [SerializeField] private UnityEvent _damageEffectEvent;
         [SerializeField] private UnityEvent _deathEvent;
-
+        
 
         public void DamageEffect()
         {
@@ -26,6 +26,11 @@ namespace HardBit.Enemies
             }
         }
 
+        public void TakeDamage(int damage, Vector3 direction)
+        {
+          
+        }
 
+       
     }
 }

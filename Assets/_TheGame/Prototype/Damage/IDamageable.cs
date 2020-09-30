@@ -1,4 +1,4 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
 
 namespace HardBit.Specific.Gameplay
 {
@@ -6,7 +6,7 @@ namespace HardBit.Specific.Gameplay
     {
         void TakeDamage(int damage);
 
-
+        void TakeDamage(int damage,Vector3 direction);
     }
 }
 

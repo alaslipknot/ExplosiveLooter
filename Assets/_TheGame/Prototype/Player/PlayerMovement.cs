@@ -15,6 +15,8 @@ namespace HardBit.Player {
         [SerializeField] private bool _canMove = true;
         [SerializeField] private bool _isRecoiling;
         [SerializeField] private float _recoilDelay = 0.5f;
+        [Header("Melee settings")]
+        [SerializeField] private float _meleePushForce = 10;
         private float _currentSpeed;
         [SerializeField] private bool _faceDirection = true;
         [SerializeField] private int _direction = 1;
@@ -36,6 +38,7 @@ namespace HardBit.Player {
         public float CurrentSpeed { get => _currentSpeed; set => _currentSpeed = value; }
         public Vector2 MoveDirection { get => _moveDirection; set => _moveDirection = value; }
         public int Direction { get => _direction; set => _direction = value; }
+        public bool FaceDirection { get => _faceDirection; set => _faceDirection = value; }
         #endregion
 
         #region Cached variables
@@ -137,7 +140,7 @@ namespace HardBit.Player {
             _currentSpeed = _moveSpeed * _inputHandler.DirectionLeft.magnitude;
             _body.AddForce(_currentSpeed * _transform.forward, ForceMode.Impulse);
             _body.velocity = Vector3.ClampMagnitude(_body.velocity, _maxVelocity);
-           // _transform.Translate(_currentSpeed * transform.forward  * Time.deltaTime, Space.World);
+            // _transform.Translate(_currentSpeed * transform.forward  * Time.deltaTime, Space.World);
         }
 
         private void FaceJoystick()
@@ -183,6 +186,16 @@ namespace HardBit.Player {
         public void SetRecoilDirectio(Vector3 recoilDir)
         {
             _recoilDirection = _transform.position - recoilDir;
+        }
+
+
+        public void DoMeleePushForwad()
+        {
+            _body.AddForce(_transform.forward * _meleePushForce, ForceMode.Impulse);
+        }
+        public void SetCanMove(int v)
+        {
+            _canMove = v == 1;
         }
 
         void OnDeathDo()

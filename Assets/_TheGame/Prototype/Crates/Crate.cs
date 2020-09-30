@@ -22,6 +22,10 @@ public class Crate : MonoBehaviour, IDamageable
         }
     }
 
+    public void TakeDamage(int damage, Vector3 direction)
+    {
+    }
+
     void DestroyObject()
     {
         gameObject.SetActive(false);

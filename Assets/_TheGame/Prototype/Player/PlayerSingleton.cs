@@ -43,10 +43,16 @@ namespace HardBit.Player {
             _playerHud = GetComponent<PlayerHUD>();
             _playerDamage = GetComponent<PlayerDamage>();
             _playerMovement = GetComponent<PlayerMovement>();
-            _playerShooting = GetComponent<PlayerShooting>();
-            _playerAiming = GetComponent<PlayerAiming>();
-            _playerAnimation = GetComponent<PlayerAnimation>();
-            _playerHostage = GetComponent<PlayerHostage>();
+            try
+            {
+                _playerShooting = GetComponent<PlayerShooting>();
+                _playerAiming = GetComponent<PlayerAiming>();
+                _playerAnimation = GetComponent<PlayerAnimation>();
+                _playerHostage = GetComponent<PlayerHostage>();
+            }catch(UnityException ue)
+            {
+                print(ue.Message);
+            }
         }
     }
 }
