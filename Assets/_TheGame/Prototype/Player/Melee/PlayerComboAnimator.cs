@@ -11,6 +11,7 @@ namespace HardBit.Player {
         public bool _doTimer;
         public bool _canHoldAttack = true;
         public bool _isInAttack;
+        public bool _isPreparing;
         private float _comboTimer;
         public float _comboTimeThreshhold = 1;
         private float _holdtimeCounter;
@@ -26,19 +27,33 @@ namespace HardBit.Player {
         // Update is called once per frame
         void Update()
         {
-
-           
-
-            if (_canHoldAttack && Input.GetButton("Shoot"))
+            if (Input.GetButtonDown("Shoot"))
             {
+                if (!_isPreparing)
+                {
+                    _isPreparing = true;
+                    PrepareAttackTrigger(true);
+                }
+            }
+
+
+            if (Input.GetButton("Shoot"))
+            {
+
+
                 if (!_isInAttack)
                 {
-                    _holdtimeCounter += Time.deltaTime;
-                    if (_holdtimeCounter >= _holdTime)
+
+                    if (_canHoldAttack)
                     {
-                        HoldAttackTrigger();
-                        _canHoldAttack = false;
-                        _comboID = 0;
+                        _holdtimeCounter += Time.deltaTime;
+                        if (_holdtimeCounter >= _holdTime)
+                        {
+                            PrepareAttackTrigger(false);
+                            HoldAttackTrigger();
+                            _canHoldAttack = false;
+                            _comboID = 0;
+                        }
                     }
                 }
             }
@@ -46,6 +61,7 @@ namespace HardBit.Player {
 
             if (Input.GetButtonUp("Shoot"))
             {
+               
                 if (!_isInAttack)
                 {
                     _comboID++;
@@ -59,17 +75,12 @@ namespace HardBit.Player {
                 _comboTimer = 0;
                 _canHoldAttack = true;
                 _holdtimeCounter = 0;
+                _isPreparing = false;
+                PrepareAttackTrigger(false);
             }
 
 
-            if (Input.GetButtonDown("Shoot"))
-            {
-                if (!_isInAttack)
-                {
-                    PrepareAttackTrigger();
 
-                }
-            }
 
             CalculateComboTime();
 
@@ -98,9 +109,15 @@ namespace HardBit.Player {
         }
 
 
-        void PrepareAttackTrigger()
+        void PrepareAttackTrigger(bool b)
         {
-            _anim.SetTrigger("PrepareAttack");
+            _anim.SetBool("PrepareAttack", b);
+
+        }
+
+        void LeavePrepareAttackTrigger()
+        {
+            _anim.SetTrigger("LeavePrepare");
 
         }
 
